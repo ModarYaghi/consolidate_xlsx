@@ -1,6 +1,6 @@
-# Excel Data Cleaner
+# Consolidate XLSX
 
-Excel Data Cleaner is a Python module aimed at automating the task of cleaning and formatting Excel files within a specified directory. This is particularly useful when dealing with large quantities of Excel files that require uniform formatting or certain data to be excluded.
+Consolidate XLSX is a Python module aimed at automating the task of cleaning and formatting Excel files within a specified directory. This is particularly useful when dealing with large quantities of Excel files that require uniform formatting or certain data to be excluded.
 
 ## Functionality
 
