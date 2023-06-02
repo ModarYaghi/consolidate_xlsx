@@ -12,9 +12,7 @@ for sheet in xl.sheet_names:
     df = xl.parse(sheet)
 
     # Create a dictionary for this sheet
-    sheet_dict = {}
-    sheet_dict['sheet_name'] = sheet
-    sheet_dict['columns'] = df.columns.tolist()
+    sheet_dict = {'sheet_name': sheet, 'columns': df.columns.tolist()}
 
     # Add the dictionary to the list
     sheets_columns.append(sheet_dict)

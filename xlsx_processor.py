@@ -5,6 +5,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 def copy_xlsx_files(src_dir, dst_dir_name='TS_processed'):
     """ Copies all Excel files from the source directory to the destination directory."""
     dst_dir = os.path.join(src_dir, dst_dir_name)
@@ -29,10 +30,12 @@ def get_initials(filename):
     else:
         raise ValueError(f"Unexpected filename format: {filename}")
 
+
 def add_service_provider_column(df, provider_initials):
     """Adds a service provider initials column to a DataFrame."""
     df.insert(0, 'sp', provider_initials)
     return df
+
 
 def remove_empty_rows(df):
     """Removes rows from a DataFrame where all cells (except in the '#' and 'Service Provider' columns) are NA."""
@@ -51,6 +54,7 @@ def load_and_clean_sheet(excel_file, sheet_name, cols_to_drop):
     df = df.reset_index(drop=True)
     df = df.drop(columns=[col for col in cols_to_drop if col in df.columns])
     return df
+
 
 def clean_excel_files(dir_path, cols_to_drop, sheets_to_drop):
     """ Cleans Excel files in a directory by dropping specified columns and sheets."""
