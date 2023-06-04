@@ -7,7 +7,6 @@ sheet_names = {
     'TRW': '4_trw',
     'TD': '5_td',
     'Creative Workshop': '6_cws'
-    # add more as needed
 }
 col_names = {
     'Screening': {
@@ -23,7 +22,6 @@ col_names = {
         'Source of referral': '07_sor',
         "Referring organization \n(I/NGO, CBO, int'l agency)\nor (Outreach)": '08_rorg',
         'Notes': '09_note'
-        # add more as needed
 
     },
     'MH Intake': {
@@ -49,7 +47,6 @@ col_names = {
         'Intake # 3': '15.3_int_s3_date',
         'Re-intake': '15.4_rint_date',
         'Notes': '19_note',
-        # add more as needed
     },
     'MH Intake ': {
         'Unnamed: 0': 'Unnamed: 0',
@@ -179,5 +176,4 @@ col_names = {
         'Notes': '10_note'
 
     },
-    # add more as needed
 }

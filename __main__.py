@@ -8,8 +8,14 @@ def main():
     # Get the current working directory
     cwd = os.getcwd()
 
+    # Get the path to the script
+    script_path = os.path.join(cwd, 'consolidate_xlsx')
+
     # Get the 'TS_processed' directory
     dir_path = os.path.join(cwd, 'TS_processed')
+
+    # Get the json file path
+    json_file = os.path.join(script_path, 'sheets_details.json')
 
     # Copy Excel files from cwd to 'consolidated_tracking_tools' directory
     xp.copy_xlsx_files(cwd)
@@ -22,10 +28,17 @@ def main():
     sheets_to_drop = ["GZT_Service_Map", "Glossary", "Drop-down"]
 
     # Clean Excel files in the 'consolidated_tracking_tools' directory
-    xp.clean_excel_files(dir_path, cols_to_drop, sheets_to_drop)
+    xp.clean_and_rename_excel_files(dir_path, cols_to_drop, sheets_to_drop, json_file)
+
+    # Rename sheets' and columns' names after cleaning. New names are specified in 'sheets_details.json'
+    # xp.rename_sheets_and_columns(dir_path, json_file)
+
+    # Pause for 5 seconds to allow all write operations to complete
+    time.sleep(5)
 
     # Consolidate all the cleaned Excel files into one
     xp.merge_excel_files(dir_path, 'TS_psc_All.xlsx')
+
 
 if __name__ == '__main__':
     main()

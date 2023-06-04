@@ -1,0 +1,30 @@
+[
+    {
+        "name": "0_scr",
+        "columns": ["00_scr_sp","01_sn", "02_rn", "03_beneficiary_name", "04_gender", "05_age", "06_natly", "07_scr_date", "08_sor", "09_rorg", "10_note"]
+    },
+    {
+        "name": "1_int",
+        "columns": ["00_int_sp","01_sn", "02_rn", "03_fcid", "04_beneficiary_name", "05_gender", "06_age", "07_natly", "08.1_is_fom", "08.2_is_sod", "08.3_is_pts", "08.4_is_sts", "08.5_is_wov", "08.6_is_st/gbv", "08.7_is_lgbtiq", "08.8_is_other", "09.1_int_s1_date", "09.2_int_s2_date", "09.3_int_s3_date", "09.4_rint_date", "10_note"]
+    },
+    {
+        "name": "2_icgc",
+        "columns": ["00_icgc_sp","01_sn", "02_rn", "03_fcid", "04_beneficiary_name", "05_gender", "06_age", "07_natly", "08_ic/gc", "09_is_pt", "10_gn", "11.1_s1_date", "11.2_s2_date", "11.3_s3_date", "11.4_s4_date", "11.5_s5_date", "11.6_s6_date", "11.7_s7_date", "11.8_s8_date", "11.9_s9_date", "11.10_s10_date", "12_tns", "13_note"]
+    },
+    {
+        "name": "3_fua",
+        "columns": ["00_fua_sp","01_sn", "02_rn", "03_fcid", "04_beneficiary_name", "05_gender", "06_age", "07_natly", "08.1_1m_chin_date", "08.2_3m_fua_date", "08.3_6m_fua_date", "08.4_12m_fua_date", "09_stus", "10_closure_reason", "11_note"]
+    },
+    {
+        "name": "4_trw",
+        "columns": ["00_trw_sp","01_sn", "02_rn", "03_fcid", "04_beneficiary_name", "04_gender", "06_age", "07_natly", "08.1_s1_date", "08.2_s2_date", "09_note"]
+    },
+    {
+        "name": "5_td",
+        "columns": ["00_td_sp","01_sn", "02_rn", "03_fcid", "04_beneficiary_name", "05_gender", "06_age", "07_natly", "08.1_consult_date", "08.2_consent_date", "09.1_is_legdoc", "09.2_is_induse", "09.3_is_cws", "09.4_is_comm", "09.5_is_adv", "10.1_intrvw1_date", "10.2_intrvw2_date", "10.3_intrvw3_date", "11_tns", "12_note"]
+    },
+    {
+        "name": "6_cws",
+        "columns": ["00_cws_sp","01_sn", "02_rn", "03_fcid", "04_beneficiary_name", "05_gender", "06_age", "07_natly", "08.1_consult_date", "08.2_consent_date", "09.1_cws_day1_date", "09.2_cws_day2_date", "10_tnd", "11_note"]
+    }
+]
