@@ -2,12 +2,11 @@ sheet_names = {
     'Screening': '0_scr',
     'MH Intake ': '1_int',
     'MH Intake': '1_int',
-    'Counseling': '2_cnsl',
+    'Counseling': '2_ic/gc',
     'Follow-up Assessment': '3_fua',
     'TRW': '4_trw',
     'TD': '5_td',
     'Creative Workshop': '6_cws'
-    # add more as needed
 }
 col_names = {
     'Screening': {
@@ -23,7 +22,6 @@ col_names = {
         'Source of referral': '07_sor',
         "Referring organization \n(I/NGO, CBO, int'l agency)\nor (Outreach)": '08_rorg',
         'Notes': '09_note'
-        # add more as needed"
 
     },
     'MH Intake': {
@@ -49,7 +47,6 @@ col_names = {
         'Intake # 3': '15.3_int_s3_date',
         'Re-intake': '15.4_rint_date',
         'Notes': '19_note',
-        # add more as needed
     },
     'MH Intake ': {
         'Unnamed: 0': 'Unnamed: 0',
@@ -81,7 +78,7 @@ col_names = {
         'System ID': 'System ID',
         'Referral #': '01_rn',
         'FC ID #': '02_fcid',
-        'Beneficiary name': '03_bebeficiary_name',
+        'Beneficiary name': '03_beneficiary_name',
         'Gender': '04_gender',
         'Age': '05_age',
         'Nationality': '06_natly',
@@ -122,13 +119,61 @@ col_names = {
 
     },
     'TRW': {
+        'Unnamed: 0': 'Unnamed: 0',
+        '#': '00_sn',
+        'System ID': 'System ID',
+        'Referral #': '01_rn',
+        'FC ID #': '02_fcid',
+        'Beneficiary name': '03_beneficiary_name',
+        'Gender': '04_gender',
+        'Age': '05_age',
+        'Nationality': '06_natly',
+        'TRW session # 1': '07.1_s1_date',
+        'TRW session # 2': '07.2_s2_date',
+        'Notes': '08_note'
 
     },
+
     'TD': {
+        'Unnamed: 0': 'Unnamed: 0',
+        '#': '00_sn',
+        'System ID': 'System ID',
+        'Referral #': '01_rn',
+        'FC ID #': '02_fcid',
+        'Beneficiary name': '03_beneficiary_name',
+        'Gender': '04_gender',
+        'Age': '05_age',
+        'Nationality': '06_natly',
+        'Consultation session': '07.1_consult_date',
+        'Consent session': '07.2_consent_date',
+        'Legal doc path': '08.1_is_legdoc',
+        'Individual use path': '08.2_is_induse',
+        'Creative Workshop path': '08.3_is_cws',
+        'Communication path': '08.4_is_comm',
+        'Advocacy path': '08.5_is_adv',
+        'Interview session 1': '09.1_ir1_date',
+        'Interview session 2': '09.2_ir2_date',
+        'Interview session 3': '09.3_ir3_date',
+        'Total # of sessions': '10_tns',
+        'Notes': '11_note'
 
     },
     'Creative Workshop': {
+        'Unnamed: 0': 'Unnamed: 0',
+        '#': '00_sn',
+        'System ID': 'System ID',
+        'Referral #': '01_rn',
+        'FC ID #': '02_fcid',
+        'Beneficiary name': '03_beneficiary_name',
+        'Gender': '04_gender',
+        'Age': '05_age',
+        'Nationality': '06_natly',
+        'Consultation session': '07.1_consult_date',
+        'Consent session': '07.2_consent_date',
+        'First creative workshop day': '08.1_cws_day1_date',
+        'Second creative workshop day': '08.2_cws_day2_date',
+        'Total # of workshop hours': '09_tnd',
+        'Notes': '10_note'
 
     },
-    # add more as needed
 }
