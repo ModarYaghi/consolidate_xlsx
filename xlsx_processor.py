@@ -73,7 +73,6 @@ def rename_sheets_and_columns_in_df(df, name_mapping):
     df.columns = name_mapping['columns']
     return df
 # ------------------
-
 def clean_and_rename_excel_files(dir_path, cols_to_drop, sheets_to_drop, json_file):
     """ Cleans Excel files in a directory by dropping specified columns and sheets, and renames sheets and columns."""
     logger.info('Cleaning and renaming Excel files in directory: %s', dir_path)
@@ -137,8 +136,6 @@ def clean_and_rename_excel_files(dir_path, cols_to_drop, sheets_to_drop, json_fi
 #             except Exception as e:
 #                 logger.error("Error processing %s: %s", file_path, e)
 #     logger.info('Cleaned Excel files in directory.')
-
-
 # ------------------
 # def rename_sheets_and_columns(dst_dir, json_file):
 #     """renames the sheets and columns of Excel files in a specified directory based on mappings provided in a JSON file."""
@@ -190,7 +187,6 @@ def clean_and_rename_excel_files(dir_path, cols_to_drop, sheets_to_drop, json_fi
 #             except Exception as e:
 #                 logger.error('Error processing Excel file %s: %s', file_path, e)
 #     logger.info('Finished processing Excel files.')
-
 # ------------------
 def merge_excel_files(dir_path, output_file):
     """ Merge all Excel files in a directory into one Excel file."""

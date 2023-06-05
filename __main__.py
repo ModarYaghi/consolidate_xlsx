@@ -30,12 +30,6 @@ def main():
     # Clean Excel files in the 'consolidated_tracking_tools' directory
     xp.clean_and_rename_excel_files(dir_path, cols_to_drop, sheets_to_drop, json_file)
 
-    # Rename sheets' and columns' names after cleaning. New names are specified in 'sheets_details.json'
-    # xp.rename_sheets_and_columns(dir_path, json_file)
-
-    # Pause for 5 seconds to allow all write operations to complete
-    time.sleep(5)
-
     # Consolidate all the cleaned Excel files into one
     xp.merge_excel_files(dir_path, 'TS_psc_All.xlsx')
 
