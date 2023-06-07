@@ -1,4 +1,5 @@
 import os
+import passwords as ps
 import time
 import tkinter as tk
 from tkinter import filedialog
@@ -21,6 +22,7 @@ def select_path(prompt_message, select_type="file", initial_dir=initial_dir):
 
     return path
 
+
 def main():
     """Main function to execute the script."""
 
@@ -29,6 +31,8 @@ def main():
 
     # Select output directory
     dir_path = select_path("Please select the directory to write the output file to.", select_type="dir")
+
+    dir_path = os.path.join(dir_path, 'consolidated')
     
     # Get the current script directory
     script_dir = os.path.dirname(os.path.realpath(__file__))
@@ -36,9 +40,25 @@ def main():
     # Get the json file path
     json_file = os.path.join(script_dir, 'sheets_details.json')
 
+
     # Copy selected Excel files to 'consolidated_tracking_tools' directory
     for file in files:
-        xp.copy_xlsx_file(file, dir_path)
+        try:
+            # First, try to open the file without a password
+            xp.decrypt_and_copy_xlsx_file(file, dir_path)
+            print(f"{file} does not require a password.")
+        except Exception as e:
+            print(f"Failed to decrypt {file} without password: {str(e)}")
+            # If it fails, try to open the file with each password
+            for password in ps.passwords:
+                try:
+                    xp.decrypt_and_copy_xlsx_file(file, dir_path, password)
+                    print(f"Password for {file} is {password}.")
+                    break  # If the password is correct, go to the next file
+                except Exception as e:
+                    print(f"Failed to decrypt {file} with password {password}: {str(e)}")
+                    continue  # If the password is incorrect, try the next password 
+
 
     # Pause for 5 seconds to allow all write operations to complete
     time.sleep(5)

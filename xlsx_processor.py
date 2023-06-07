@@ -1,40 +1,56 @@
 import json
 import logging
+import msoffcrypto
 import os
 import pandas as pd
+import openpyxl
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-# def copy_xlsx_files(src_dir, dst_dir_name='TS_processed'):
-#     """ Copies all Excel files from the source directory to the destination directory."""
-#     dst_dir = os.path.join(src_dir, dst_dir_name)
-#     os.makedirs(dst_dir, exist_ok=True)
+# def copy_xlsx_file(file, dst_dir):
+#     """Copies an Excel file to the destination directory."""
 
-#     for fname in os.listdir(src_dir):
-#         if fname.endswith('.xlsx'):
-#             logger.info('Found excel file: %s', fname)
-#             xls = pd.ExcelFile(os.path.join(src_dir, fname))
-#             with pd.ExcelWriter(os.path.join(dst_dir, fname)) as writer:
-#                 for sheet_name in xls.sheet_names:
-#                     df = pd.read_excel(xls, sheet_name)
-#                     df.to_excel(writer, sheet_name=sheet_name, index=False)
-#             logger.info('Copied file to: %s', os.path.join(dst_dir, fname))
-def copy_xlsx_file(file, dst_dir):
-    """Copies an Excel file to the destination directory."""
+#     os.makedirs(dst_dir, exist_ok=True)
+    
+#     fname = os.path.basename(file)
+#     if fname.endswith('.xlsx'):
+#         logger.info('Found excel file: %s', fname)
+#         xls = pd.ExcelFile(file)
+#         with pd.ExcelWriter(os.path.join(dst_dir, fname)) as writer:
+#             for sheet_name in xls.sheet_names:
+#                 df = pd.read_excel(xls, sheet_name)
+#                 df.to_excel(writer, sheet_name=sheet_name, index=False)
+#         logger.info('Copied file to: %s', os.path.join(dst_dir, fname))
+
+def decrypt_and_copy_xlsx_file(file, dst_dir, password):
+    """Decrypts a password-protected Excel file and copies it to the destination directory."""
 
     os.makedirs(dst_dir, exist_ok=True)
-    
+
     fname = os.path.basename(file)
     if fname.endswith('.xlsx'):
         logger.info('Found excel file: %s', fname)
-        xls = pd.ExcelFile(file)
+
+        # Decrypt the Excel file
+        with open(file, "rb") as f:
+            crypto = msoffcrypto.OfficeFile(f)
+            crypto.load_key(password=password)
+            decrypted_file = f"{file}_decrypted.xlsx"
+            with open(decrypted_file, "wb") as df:
+                crypto.decrypt(df)
+
+        # Read the decrypted Excel file
+        xls = pd.ExcelFile(decrypted_file)
         with pd.ExcelWriter(os.path.join(dst_dir, fname)) as writer:
             for sheet_name in xls.sheet_names:
                 df = pd.read_excel(xls, sheet_name)
                 df.to_excel(writer, sheet_name=sheet_name, index=False)
         logger.info('Copied file to: %s', os.path.join(dst_dir, fname))
+
+        # Delete the decrypted file after copying it
+        os.remove(decrypted_file)
 
 
 def get_initials(filename):
