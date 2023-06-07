@@ -21,4 +21,4 @@ merged_df = merged_df.loc[:,~merged_df.columns.duplicated()]
 with pd.ExcelWriter('TS_processed/TS_psc_All.xlsx', engine='openpyxl', mode='a') as writer: 
     merged_df.to_excel(writer, sheet_name='bbi')
 
-assert merged_df.
+assert merged_df

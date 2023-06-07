@@ -7,20 +7,34 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-def copy_xlsx_files(src_dir, dst_dir_name='TS_processed'):
-    """ Copies all Excel files from the source directory to the destination directory."""
-    dst_dir = os.path.join(src_dir, dst_dir_name)
-    os.makedirs(dst_dir, exist_ok=True)
+# def copy_xlsx_files(src_dir, dst_dir_name='TS_processed'):
+#     """ Copies all Excel files from the source directory to the destination directory."""
+#     dst_dir = os.path.join(src_dir, dst_dir_name)
+#     os.makedirs(dst_dir, exist_ok=True)
 
-    for fname in os.listdir(src_dir):
-        if fname.endswith('.xlsx'):
-            logger.info('Found excel file: %s', fname)
-            xls = pd.ExcelFile(os.path.join(src_dir, fname))
-            with pd.ExcelWriter(os.path.join(dst_dir, fname)) as writer:
-                for sheet_name in xls.sheet_names:
-                    df = pd.read_excel(xls, sheet_name)
-                    df.to_excel(writer, sheet_name=sheet_name, index=False)
-            logger.info('Copied file to: %s', os.path.join(dst_dir, fname))
+#     for fname in os.listdir(src_dir):
+#         if fname.endswith('.xlsx'):
+#             logger.info('Found excel file: %s', fname)
+#             xls = pd.ExcelFile(os.path.join(src_dir, fname))
+#             with pd.ExcelWriter(os.path.join(dst_dir, fname)) as writer:
+#                 for sheet_name in xls.sheet_names:
+#                     df = pd.read_excel(xls, sheet_name)
+#                     df.to_excel(writer, sheet_name=sheet_name, index=False)
+#             logger.info('Copied file to: %s', os.path.join(dst_dir, fname))
+def copy_xlsx_file(file, dst_dir):
+    """Copies an Excel file to the destination directory."""
+
+    os.makedirs(dst_dir, exist_ok=True)
+    
+    fname = os.path.basename(file)
+    if fname.endswith('.xlsx'):
+        logger.info('Found excel file: %s', fname)
+        xls = pd.ExcelFile(file)
+        with pd.ExcelWriter(os.path.join(dst_dir, fname)) as writer:
+            for sheet_name in xls.sheet_names:
+                df = pd.read_excel(xls, sheet_name)
+                df.to_excel(writer, sheet_name=sheet_name, index=False)
+        logger.info('Copied file to: %s', os.path.join(dst_dir, fname))
 
 
 def get_initials(filename):
@@ -67,14 +81,15 @@ def load_and_clean_sheet(excel_file, sheet_name, cols_to_drop):
     return df
 
 # ------------------
-def rename_sheets_and_columns_in_df(df, name_mapping):
-    """Renames the sheets and columns of a DataFrame based on a name mapping."""
-    # Rename the columns
-    df.columns = name_mapping['columns']
-    return df
+# def rename_sheets_and_columns_in_df(df, name_mapping):
+#     """Renames the sheets and columns of a DataFrame based on a name mapping."""
+#     # Rename the columns
+#     df.columns = name_mapping['columns']
+#     return df
 # ------------------
 def clean_and_rename_excel_files(dir_path, cols_to_drop, sheets_to_drop, json_file):
     """ Cleans Excel files in a directory by dropping specified columns and sheets, and renames sheets and columns."""
+
     logger.info('Cleaning and renaming Excel files in directory: %s', dir_path)
 
     # Read the JSON file
@@ -114,80 +129,7 @@ def clean_and_rename_excel_files(dir_path, cols_to_drop, sheets_to_drop, json_fi
                 logger.error("Error processing %s: %s", file_path, e)
     logger.info('Cleaned and renamed Excel files in directory.')
 
-# def clean_excel_files(dir_path, cols_to_drop, sheets_to_drop):
-#     """ Cleans Excel files in a directory by dropping specified columns and sheets."""
-#     logger.info('Cleaning Excel files in directory: %s', dir_path)
-#     for file in os.listdir(dir_path):
-#         if file.endswith('.xlsx'):
-#             provider_initials = get_initials(file)
-#             file_path = os.path.join(dir_path, file)
-#             temp_file_path = os.path.join(dir_path, f'temp_{file}')
-#             try:
-#                 with pd.ExcelFile(file_path) as excel_file:
-#                     with pd.ExcelWriter(temp_file_path) as writer:
-#                         for sheet_name in excel_file.sheet_names:
-#                             if sheet_name not in sheets_to_drop:
-#                                 df = load_and_clean_sheet(excel_file, sheet_name, cols_to_drop)
-#                                 df = add_service_provider_column(df, provider_initials)
-#                                 df = remove_empty_rows(df)
-#                                 df.to_excel(writer, sheet_name=sheet_name, index=False)
-#                 os.remove(file_path)
-#                 os.rename(temp_file_path, file_path)
-#             except Exception as e:
-#                 logger.error("Error processing %s: %s", file_path, e)
-#     logger.info('Cleaned Excel files in directory.')
-# ------------------
-# def rename_sheets_and_columns(dst_dir, json_file):
-#     """renames the sheets and columns of Excel files in a specified directory based on mappings provided in a JSON file."""
 
-#     # Configure the logger
-#     logging.basicConfig(filename='rename_sheets_and_columns.log', level=logging.INFO)
-#     logger = logging.getLogger(__name__)
-
-#     # Read the JSON file
-#     try:
-#         with open(json_file) as f:
-#             name_mappings = json.load(f)
-#     except Exception as e:
-#         logger.error('Error reading JSON file %s: %s', json_file, e)
-#         return
-
-#     # Iterate over the Excel files
-#     for file in os.listdir(dst_dir):
-#         logger.info('Processing file: %s', file)
-#         if file.endswith('.xlsx'):
-#             file_path = os.path.join(dst_dir, file)
-#             new_file_path = os.path.join(dst_dir, f'new_{file}')
-
-#             try:
-#                 # Create a new ExcelWriter object
-#                 with pd.ExcelWriter(new_file_path, engine='openpyxl') as writer:
-#                     # Open the Excel file
-#                     xls = pd.ExcelFile(file_path)
-
-#                     # Iterate over the sheets in the file
-#                     for i, sheet_name in enumerate(xls.sheet_names):
-#                         # Read the sheet into a DataFrame
-#                         df = pd.read_excel(xls, sheet_name)
-
-#                         # Get the name mapping for this sheet
-#                         name_mapping = name_mappings[i]
-
-#                         # Rename the columns
-#                         df.columns = name_mapping['columns']
-
-#                         # Write the DataFrame to the new Excel file
-#                         df.to_excel(writer, sheet_name=name_mapping['name'], index=False)
-
-#                 # Delete the original Excel file
-#                 os.remove(file_path)
-
-#                 # Rename the new Excel file to the original file name
-#                 os.rename(new_file_path, file_path)
-#             except Exception as e:
-#                 logger.error('Error processing Excel file %s: %s', file_path, e)
-#     logger.info('Finished processing Excel files.')
-# ------------------
 def merge_excel_files(dir_path, output_file):
     """ Merge all Excel files in a directory into one Excel file."""
     logger.info('Merging Excel files in directory: %s', dir_path)
