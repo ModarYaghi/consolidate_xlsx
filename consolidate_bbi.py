@@ -2,6 +2,7 @@ import pandas as pd
 import tkinter as tk
 from tkinter import filedialog
 
+
 def select_file(prompt_message):
     """Open the file explorer to select an Excel file."""
     print(prompt_message)
@@ -11,6 +12,7 @@ def select_file(prompt_message):
     file_path = filedialog.askopenfilename(filetypes=[("Excel files", "*.xlsx")])  # Open the file dialog.
 
     return file_path
+
 
 # Select input file
 file_path = select_file("Please select the Excel file to process.")
@@ -40,7 +42,7 @@ merged_df = pd.merge(screening_df, intake_df, on='02_rn', how='outer', suffixes=
 assert not merged_df.empty, "The merged dataframe is empty"
 
 # Remove duplicate columns
-merged_df = merged_df.loc[:,~merged_df.columns.duplicated()]
+merged_df = merged_df.loc[:, ~merged_df.columns.duplicated()]
 
 # Write the merged dataframe to a new sheet in the same Excel file
 with pd.ExcelWriter(file_path, engine='openpyxl', mode='a') as writer:

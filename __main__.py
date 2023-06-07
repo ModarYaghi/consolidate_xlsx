@@ -5,18 +5,18 @@ import tkinter as tk
 from tkinter import filedialog
 import xlsx_processor as xp
 
-
 initial_dir = r"C:\Users\mfyag\OneDrive - SİVİL HUKUK DERNEĞi\Documents\Family Center\Tracking_System_Collective"
 
-def select_path(prompt_message, select_type="file", initial_dir=initial_dir):
+
+def select_path(prompt_message, select_type="file", default_dir=initial_dir):
     print(prompt_message)
     root = tk.Tk()
     root.withdraw()  # Hide the main window.
 
     if select_type == "file":
-        path = filedialog.askopenfilenames(initialdir=initial_dir)  # Open the file dialog.
+        path = filedialog.askopenfilenames(initialdir=default_dir)  # Open the file dialog.
     elif select_type == "dir":
-        path = filedialog.askdirectory(initialdir=initial_dir)  # Open the directory dialog.
+        path = filedialog.askdirectory(initialdir=default_dir)  # Open the directory dialog.
     else:
         raise ValueError("Invalid selection type. Expected 'file' or 'dir'.")
 
@@ -31,15 +31,14 @@ def main():
 
     # Select output directory
     dir_path = select_path("Please select the directory to write the output file to.", select_type="dir")
-
+    # Create a subdirectory for the consolidated files.
     dir_path = os.path.join(dir_path, 'consolidated')
-    
+
     # Get the current script directory
     script_dir = os.path.dirname(os.path.realpath(__file__))
 
     # Get the json file path
     json_file = os.path.join(script_dir, 'sheets_details.json')
-
 
     # Copy selected Excel files to 'consolidated_tracking_tools' directory
     for file in files:
@@ -57,8 +56,7 @@ def main():
                     break  # If the password is correct, go to the next file
                 except Exception as e:
                     print(f"Failed to decrypt {file} with password {password}: {str(e)}")
-                    continue  # If the password is incorrect, try the next password 
-
+                    continue  # If the password is incorrect, try the next password
 
     # Pause for 5 seconds to allow all write operations to complete
     time.sleep(5)
@@ -72,6 +70,7 @@ def main():
 
     # Consolidate all the cleaned Excel files into one
     xp.merge_excel_files(dir_path, 'TS_psc_All.xlsx')
+
 
 if __name__ == '__main__':
     main()
