@@ -1,3 +1,4 @@
+from io import BytesIO
 import json
 import logging
 import msoffcrypto
@@ -65,11 +66,14 @@ def decrypt_and_copy_xlsx_file(file, dst_dir, password=None):
             with open(file, "rb") as f:
                 crypto = msoffcrypto.OfficeFile(f)
                 crypto.load_key(password=password)
-                decrypted_file = f"{file}_decrypted.xlsx"
-                with open(decrypted_file, "wb") as df:
-                    crypto.decrypt(df)
+                decrypted_file = BytesIO() # f"{file}_decrypted.xlsx"
+                # decrypted_file = f"{file}_decrypted.xlsx"
+                # with open(decrypted_file, "wb") as df:
+                    # crypto.decrypt(df)
+                crypto.decrypt(decrypted_file)
+                decrypted_file.seek(0) # Reset the file pointer to the beginning of the file
         else:
-            decrypted_file = file
+            decrypted_file = open(file, "rb")
 
         # Read the (decrypted) Excel file
         xls = pd.ExcelFile(decrypted_file)
@@ -81,7 +85,8 @@ def decrypt_and_copy_xlsx_file(file, dst_dir, password=None):
 
         # If a password has been provided, delete the decrypted file after copying it
         if password is not None:
-            os.remove(decrypted_file)
+            # os.remove(decrypted_file)
+            decrypted_file.close()
 
 
 def get_initials(filename):

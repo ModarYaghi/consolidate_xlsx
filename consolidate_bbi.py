@@ -23,7 +23,7 @@ intake_sheet_name = 1
 
 try:
     screening_df = pd.read_excel(file_path, sheet_name=screening_sheet_name, usecols=range(7))
-    intake_df = pd.read_excel(file_path, sheet_name=intake_sheet_name, usecols=[2, 3])
+    intake_df = pd.read_excel(file_path, sheet_name=intake_sheet_name, usecols=[0,1, 2, 3])
 except FileNotFoundError:
     print(f"Error: File '{file_path}' not found")
     exit()

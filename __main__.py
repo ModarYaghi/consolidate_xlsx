@@ -47,7 +47,8 @@ def main():
             xp.decrypt_and_copy_xlsx_file(file, dir_path)
             print(f"{file} does not require a password.")
         except Exception as e:
-            print(f"Failed to decrypt {file} without password: {str(e)}")
+            # print(f"Failed to decrypt {file} without password: {str(e)}")
+            print("--->")
             # If it fails, try to open the file with each password
             for password in ps.passwords:
                 try:
@@ -55,7 +56,8 @@ def main():
                     print(f"Password for {file} is {password}.")
                     break  # If the password is correct, go to the next file
                 except Exception as e:
-                    print(f"Failed to decrypt {file} with password {password}: {str(e)}")
+                    # print(f"Failed to decrypt {file} with password {password}: {str(e)}")
+                    print("--->")
                     continue  # If the password is incorrect, try the next password
 
     # Pause for 5 seconds to allow all write operations to complete
