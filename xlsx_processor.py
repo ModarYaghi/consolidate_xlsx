@@ -9,48 +9,6 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-# def copy_xlsx_file(file, dst_dir):
-#     """Copies an Excel file to the destination directory."""
-
-#     os.makedirs(dst_dir, exist_ok=True)
-
-#     fname = os.path.basename(file)
-#     if fname.endswith('.xlsx'):
-#         logger.info('Found excel file: %s', fname)
-#         xls = pd.ExcelFile(file)
-#         with pd.ExcelWriter(os.path.join(dst_dir, fname)) as writer:
-#             for sheet_name in xls.sheet_names:
-#                 df = pd.read_excel(xls, sheet_name)
-#                 df.to_excel(writer, sheet_name=sheet_name, index=False)
-#         logger.info('Copied file to: %s', os.path.join(dst_dir, fname))
-
-# def decrypt_and_copy_xlsx_file(file, dst_dir, password=None):
-#     """Decrypts a password-protected Excel file and copies it to the destination directory."""
-#
-#     os.makedirs(dst_dir, exist_ok=True)
-#
-#     fname = os.path.basename(file)
-#     if fname.endswith('.xlsx'):
-#         logger.info('Found excel file: %s', fname)
-#
-#         # Decrypt the Excel file
-#         with open(file, "rb") as f:
-#             crypto = msoffcrypto.OfficeFile(f)
-#             crypto.load_key(password=password)
-#             decrypted_file = f"{file}_decrypted.xlsx"
-#             with open(decrypted_file, "wb") as df:
-#                 crypto.decrypt(df)
-#
-#         # Read the decrypted Excel file
-#         xls = pd.ExcelFile(decrypted_file)
-#         with pd.ExcelWriter(os.path.join(dst_dir, fname)) as writer:
-#             for sheet_name in xls.sheet_names:
-#                 df = pd.read_excel(xls, sheet_name)
-#                 df.to_excel(writer, sheet_name=sheet_name, index=False)
-#         logger.info('Copied file to: %s', os.path.join(dst_dir, fname))
-#
-#         # Delete the decrypted file after copying it
-#         os.remove(decrypted_file)
 def decrypt_and_copy_xlsx_file(file, dst_dir, password=None):
     """Decrypts a password-protected Excel file (if a password is provided) and copies it to the destination
     directory."""
@@ -67,9 +25,6 @@ def decrypt_and_copy_xlsx_file(file, dst_dir, password=None):
                 crypto = msoffcrypto.OfficeFile(f)
                 crypto.load_key(password=password)
                 decrypted_file = BytesIO() # f"{file}_decrypted.xlsx"
-                # decrypted_file = f"{file}_decrypted.xlsx"
-                # with open(decrypted_file, "wb") as df:
-                    # crypto.decrypt(df)
                 crypto.decrypt(decrypted_file)
                 decrypted_file.seek(0) # Reset the file pointer to the beginning of the file
         else:
@@ -133,13 +88,6 @@ def load_and_clean_sheet(excel_file, sheet_name, cols_to_drop):
     return df
 
 
-# ------------------
-# def rename_sheets_and_columns_in_df(df, name_mapping):
-#     """Renames the sheets and columns of a DataFrame based on a name mapping."""
-#     # Rename the columns
-#     df.columns = name_mapping['columns']
-#     return df
-# ------------------
 def clean_and_rename_excel_files(dir_path, cols_to_drop, sheets_to_drop, json_file):
     """ Cleans Excel files in a directory by dropping specified columns and sheets, and renames sheets and columns."""
 
