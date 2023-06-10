@@ -108,7 +108,7 @@ def clean_and_rename_excel_files(dir_path, cols_to_drop, sheets_to_drop, json_fi
             temp_file_path = os.path.join(dir_path, f'temp_{file}')
             try:
                 with pd.ExcelFile(file_path) as excel_file:
-                    with pd.ExcelWriter(temp_file_path, engine='xlsxwriter') as writer:
+                    with pd.ExcelWriter(temp_file_path, engine='openpyxl') as writer:
                         for i, sheet_name in enumerate(excel_file.sheet_names):
                             if sheet_name not in sheets_to_drop:
                                 df = load_and_clean_sheet(excel_file, sheet_name, cols_to_drop)
